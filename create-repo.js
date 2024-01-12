@@ -5,6 +5,7 @@ const octokit = new Octokit();
 const config = require('./config');
 
 async function createRepository(repoName) {
+  // first half is request fields (name, etc.), second half indicates response fields (id, name, etc.)
   const mutation = `
     mutation {
       createRepository(input: {
@@ -42,7 +43,9 @@ async function createRepository(repoName) {
   }
 }
 
-// Example usage
-const repoName = 'octokit-graphql-test';
+module.exports = createRepository;
 
-createRepository(repoName);
+// Example usage
+// const repoName = 'octokit-graphql-test2';
+
+// createRepository(repoName);
