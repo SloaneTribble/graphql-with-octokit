@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@octokit/core": "^5.0.2",
+    "axios": "^1.6.5",
+    "graphql": "^16.8.1"
+  }
+}
