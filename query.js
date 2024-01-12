@@ -18,7 +18,7 @@ async function mutate(mutation) {
       },
     });
 
-    console.log('Mutation successful: ', response);
+    console.log('Query successful; response: ', response);
     // Handle the response as needed
     return response;
   } catch (error) {

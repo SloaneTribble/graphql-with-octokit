@@ -1,4 +1,8 @@
-const mutate = require('./mutate');
+const query = require('./query');
+
+////////////////////////////
+// CREATE REPO
+////////////////////////////
 
 // const repoName = 'delete-me';
 
@@ -23,7 +27,7 @@ const mutate = require('./mutate');
 //     }
 //   `;
 //     try{
-//       const response = await mutate(createRepoMutation);
+//       const response = await query(createRepoMutation);
 //       const repoId = response.createRepository.repository.id;
 //       console.log("repo id: ", repoId);
 //       return repoId;
@@ -35,9 +39,12 @@ const mutate = require('./mutate');
 
 // const repoId = createRepoAndGetId(repoName);
 
+////////////////////////////
+// CREATE ISSUE
+////////////////////////////
 
 const testRepoId = "R_kgDOLENATA";
-const testTitle = "Test Issue 1:14pm";
+const testTitle = "Test Issue 1:20pm";
 const testBody = "Body body body";
 
 
@@ -52,7 +59,7 @@ async function createIssue(repoId, title, body) {
       }
     }`;
   try{
-    const response = await mutate(createIssueMutation);
+    const response = await query(createIssueMutation);
     console.log("Response from creating issue:", response);
     return response;
   }
@@ -62,4 +69,31 @@ async function createIssue(repoId, title, body) {
 }
 
 createIssue(testRepoId, testTitle, testBody);
+
+////////////////////////////
+// GET REPO ID
+////////////////////////////
+
+const findRepo = async function getRepoByOwnerAndName(repoOwner, repoName) {
+  const queryString = 
+    `query FindRepo {
+      repository(owner: "${repoOwner}", name: "${repoName}") {
+        id
+      }
+    }`;
+  try{
+    const response = await query(queryString);
+    console.log("Response from finding Repo:", response);
+    return response;
+  }
+  catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+const repoOwner = "SloaneTribble";
+const repoName = "graphql-with-octokit";
+
+findRepo(repoOwner, repoName);
+
 
