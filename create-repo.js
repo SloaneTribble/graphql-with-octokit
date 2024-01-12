@@ -4,16 +4,14 @@ const octokit = new Octokit();
 // contains personal access token
 const config = require('./config');
 
-async function createRepository(owner, repoName) {
+async function createRepository(repoName) {
   const mutation = `
     mutation {
       createRepository(input: {
-        owner: "${owner}",
         name: "${repoName}",
         visibility: PRIVATE,
-        description: "Your repository description",
+        description: "Test description",
         hasIssuesEnabled: true,
-        hasProjectsEnabled: true
       }) {
         repository {
           id
@@ -36,7 +34,7 @@ async function createRepository(owner, repoName) {
       },
     });
 
-    console.log('Repository created:', response.data.createRepository.repository);
+    console.log('Repository created:', response);
     // Handle the response as needed
   } catch (error) {
     console.error('Error:', error.response.data.errors);
@@ -45,7 +43,6 @@ async function createRepository(owner, repoName) {
 }
 
 // Example usage
-const owner = 'SloaneTribble';
 const repoName = 'octokit-graphql-test';
 
-createRepository(owner, repoName);
+createRepository(repoName);
