@@ -97,3 +97,29 @@ const repoName = "graphql-with-octokit";
 findRepo(repoOwner, repoName);
 
 
+
+
+
+const createPR = async function createPR(repoOwner, repoName) {
+  const pullRequestMutation = 
+    `mutation {
+      createPullRequest(input: {baseRefName:"main", repositoryId: "R_kgDOLEItrQ", title: "TestPR", headRefName:"SloaneTribble:create-pr-and-issue"}) {
+        clientMutationId,
+        pullRequest{
+          body,
+          changedFiles
+          
+        }
+      }
+    }`;
+  try{
+    const response = await query(pullRequestMutation);
+    console.log("Response from finding Repo:", response);
+    return response;
+  }
+  catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+createPR();
