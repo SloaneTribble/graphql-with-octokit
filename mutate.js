@@ -18,11 +18,11 @@ async function mutate(mutation) {
       },
     });
 
-    console.log('Repository created:', response);
+    console.log('Mutation successful: ', response);
     // Handle the response as needed
     return response;
   } catch (error) {
-    console.error('Error:', error.response.data.errors);
+    console.error('Error:', error);
     // Handle errors appropriately
   }
 }
