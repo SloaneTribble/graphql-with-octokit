@@ -95,7 +95,7 @@ const findRepo = async function getRepoByOwnerAndName(repoOwner, repoName) {
 const repoOwner = "SloaneTribble";
 const repoName = "graphql-with-octokit";
 
-const repoIdByOwnerAndName = findRepo(repoOwner, repoName);
+// const repoIdByOwnerAndName = findRepo(repoOwner, repoName);
 
 
 
@@ -103,11 +103,16 @@ const repoIdByOwnerAndName = findRepo(repoOwner, repoName);
 // CREATEPR
 ////////////////////////////
 
+const baseRefName = "main";
+const repositoryId =  "R_kgDOLEItrQ";
+const title = "TestPR";
+const headRefName = "SloaneTribble:cleanup";
+const body = "This is the body";
 
-const createPR = async function createPR(repoOwner, repoName) {
+const createPR = async function createPR(baseRefName, repositoryId, title, headRefName, body) {
   const pullRequestMutation = 
     `mutation {
-      createPullRequest(input: {baseRefName:"main", repositoryId: "R_kgDOLEItrQ", title: "TestPR", headRefName:"SloaneTribble:create-pr-and-issue"}) {
+      createPullRequest(input: {baseRefName:"${baseRefName}", repositoryId: "${repositoryId}", title: "${title}", headRefName:"${headRefName}", body:"${body}"}) {
         clientMutationId,
         pullRequest{
           body,
@@ -126,4 +131,4 @@ const createPR = async function createPR(repoOwner, repoName) {
   }
 }
 
-// createPR();
+createPR(baseRefName, repositoryId, title, headRefName, body);
