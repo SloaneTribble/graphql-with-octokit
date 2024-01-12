@@ -30,25 +30,25 @@ async function mutate(mutation) {
 module.exports = mutate;
 
 // Example usage
-const repoName = 'octokit-graphql-test2';
-const createRepo = `
-    mutation {
-      createRepository(input: {
-        name: "${repoName}",
-        visibility: PRIVATE,
-        description: "Test description",
-        hasIssuesEnabled: true,
-      }) {
-        repository {
-          id
-          name
-          description
-          owner {
-            login
-          }
-        }
-      }
-    }
-  `;
+// const repoName = 'octokit-graphql-test2';
+// const createRepo = `
+//     mutation {
+//       createRepository(input: {
+//         name: "${repoName}",
+//         visibility: PRIVATE,
+//         description: "Test description",
+//         hasIssuesEnabled: true,
+//       }) {
+//         repository {
+//           id
+//           name
+//           description
+//           owner {
+//             login
+//           }
+//         }
+//       }
+//     }
+//   `;
 
-mutate(createRepo);
+// mutate(createRepo);
