@@ -4,9 +4,8 @@ const octokit = new Octokit();
 // contains personal access token
 const config = require('./config');
 
-// use import 'process...'? 
 
-async function mutate(mutation) {
+async function performMutationOrQuery(mutation) {
   // first half is request fields (name, etc.), second half indicates response fields (id, name, etc.)
 
   try {
@@ -18,7 +17,7 @@ async function mutate(mutation) {
       },
     });
 
-    console.log('Query successful; response: ', response);
+    console.log('Query or mutation successful; response: ', response);
     // Handle the response as needed
     return response;
   } catch (error) {
@@ -27,7 +26,7 @@ async function mutate(mutation) {
   }
 }
 
-module.exports = mutate;
+module.exports = performMutationOrQuery;
 
 // Example usage
 // const repoName = 'octokit-graphql-test2';

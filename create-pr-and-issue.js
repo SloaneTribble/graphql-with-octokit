@@ -37,7 +37,7 @@ const query = require('./query');
 //     }
 // }
 
-// const repoId = createRepoAndGetId(repoName);
+// const newRepoId = createRepoAndGetId(repoName);
 
 ////////////////////////////
 // CREATE ISSUE
@@ -68,7 +68,7 @@ async function createIssue(repoId, title, body) {
   }
 }
 
-createIssue(testRepoId, testTitle, testBody);
+// createIssue(testRepoId, testTitle, testBody);
 
 ////////////////////////////
 // GET REPO ID
@@ -84,7 +84,8 @@ const findRepo = async function getRepoByOwnerAndName(repoOwner, repoName) {
   try{
     const response = await query(queryString);
     console.log("Response from finding Repo:", response);
-    return response;
+    const repoId = response.repository.id;
+    return repoId;
   }
   catch (error) {
     console.error('Error:', error);
@@ -94,10 +95,13 @@ const findRepo = async function getRepoByOwnerAndName(repoOwner, repoName) {
 const repoOwner = "SloaneTribble";
 const repoName = "graphql-with-octokit";
 
-findRepo(repoOwner, repoName);
+const repoIdByOwnerAndName = findRepo(repoOwner, repoName);
 
 
 
+////////////////////////////
+// CREATEPR
+////////////////////////////
 
 
 const createPR = async function createPR(repoOwner, repoName) {
@@ -122,4 +126,4 @@ const createPR = async function createPR(repoOwner, repoName) {
   }
 }
 
-createPR();
+// createPR();
