@@ -73,7 +73,7 @@ const query = require('./query');
 // // createIssue(testRepoId, testTitle, testBody);
 
 // ////////////////////////////
-// // GET REPO ID
+// // GETREPOID
 // ////////////////////////////
 
 // const getRepoId = async function getRepoByOwnerAndName(repoOwner, repoName) {
@@ -99,6 +99,48 @@ const query = require('./query');
 
 // // const repoIdByOwnerAndName = getRepoId(repoOwner, repoName);
 
+////////////////////////////
+// RETRIEVEREPO
+////////////////////////////
+
+// look up repository by owner and repo name
+
+// let repoOwner = "SloaneTribble";
+// let repoName = "graphql-with-octokit";
+
+// const findRepoWithExtras = async function getRepoByOwnerAndNameWithExtraDetails(repoOwner, repoName) {
+//   const queryString = 
+//     `query FindRepo {
+//       repository(owner: "${repoOwner}", name: "${repoName}") {
+//         id
+//         pullRequests(first: 1) {
+//           nodes {
+//             number
+//             body
+//           }
+//         }
+//         issues(first: 1) {
+//           nodes {
+//             number
+//             author {
+//               login
+//             }
+//           }
+//         }
+//       }
+//     }
+//     `;
+//   try{
+//     const response = await query(queryString);
+//     console.log("Response from finding Repo:", response);
+//     return response;
+//   }
+//   catch (error) {
+//     console.error('Error:', error);
+//   }
+// }
+
+// findRepoWithExtras();
 
 
 // ////////////////////////////
@@ -135,30 +177,20 @@ const query = require('./query');
 
 // createPR(baseRefName, repositoryId, title, headRefName, body);
 
+
 ////////////////////////////
-// RETRIEVEREPO
+// FINDOWNERID
 ////////////////////////////
 
-// look up repository by owner and repo name
+let repoOwner = "SloaneTribble";
+let repoName = "graphql-with-octokit";
 
-const findRepoWithExtras = async function getRepoByOwnerAndName(repoOwner, repoName) {
+const findOwnerId = async function findRepoOwnerId(repoOwner, repoName) {
   const queryString = 
-    `query FindRepo {
-      repository(owner: "SloaneTribble", name: "graphql-with-octokit") {
-        id
-        pullRequests(first: 1) {
-          nodes {
-            number
-            body
-          }
-        }
-        issues(first: 1) {
-          nodes {
-            number
-            author {
-              login
-            }
-          }
+    `query FindRepositoryOwner {
+      repository(owner: "${repoOwner}", name: "${repoName}") {
+        owner {
+          id
         }
       }
     }
@@ -173,4 +205,42 @@ const findRepoWithExtras = async function getRepoByOwnerAndName(repoOwner, repoN
   }
 }
 
-findRepoWithExtras();
+findOwnerId(repoOwner, repoName);
+
+
+
+////////////////////////////
+// CREATEPROJECT
+////////////////////////////
+
+// const createProject = async function createProjectAndLinkRepo(repoOwner, repoName) {
+//   const queryString = 
+//     `query FindRepo {
+//       repository(owner: "${repoOwner}", name: "${repoName}") {
+//         id
+//         pullRequests(first: 1) {
+//           nodes {
+//             number
+//             body
+//           }
+//         }
+//         issues(first: 1) {
+//           nodes {
+//             number
+//             author {
+//               login
+//             }
+//           }
+//         }
+//       }
+//     }
+//     `;
+//   try{
+//     const response = await query(queryString);
+//     console.log("Response from finding Repo:", response);
+//     return response;
+//   }
+//   catch (error) {
+//     console.error('Error:', error);
+//   }
+// }
