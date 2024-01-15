@@ -76,28 +76,28 @@ const query = require('./query');
 // // GETREPOID
 // ////////////////////////////
 
-// const getRepoId = async function getRepoByOwnerAndName(repoOwner, repoName) {
-//   const queryString = 
-//     `query FindRepo {
-//       repository(owner: "${repoOwner}", name: "${repoName}") {
-//         id
-//       }
-//     }`;
-//   try{
-//     const response = await query(queryString);
-//     console.log("Response from finding Repo:", response);
-//     const repoId = response.repository.id;
-//     return repoId;
-//   }
-//   catch (error) {
-//     console.error('Error:', error);
-//   }
-// }
+const getRepoId = async function getRepoByOwnerAndName(repoOwner, repoName) {
+  const queryString = 
+    `query FindRepo {
+      repository(owner: "${repoOwner}", name: "${repoName}") {
+        id
+      }
+    }`;
+  try{
+    const response = await query(queryString);
+    console.log("Response from retrieving repo Id:", response);
+    const repoId = response.repository.id;
+    return repoId;
+  }
+  catch (error) {
+    console.error('Error:', error);
+  }
+}
 
-// const repoOwner = "SloaneTribble";
-// const repoName = "graphql-with-octokit";
+let repoOwner = "SloaneTribble";
+let repoName = "delete-me";
 
-// // const repoIdByOwnerAndName = getRepoId(repoOwner, repoName);
+// const repoIdByOwnerAndName = getRepoId(repoOwner, repoName);
 
 ////////////////////////////
 // RETRIEVEREPO
@@ -182,8 +182,11 @@ const query = require('./query');
 // FINDOWNERID
 ////////////////////////////
 
-let repoOwner = "SloaneTribble";
-let repoName = "graphql-with-octokit";
+// we will retrieve the id of the owner of a repo we create
+// and use that when creating a project
+
+repoOwner = "SloaneTribble";
+repoName = "delete-me";
 
 const findOwnerId = async function findRepoOwnerId(repoOwner, repoName) {
   const queryString = 
@@ -197,7 +200,46 @@ const findOwnerId = async function findRepoOwnerId(repoOwner, repoName) {
     `;
   try{
     const response = await query(queryString);
-    console.log("Response from finding Repo:", response);
+    console.log("Id of repo owner:", response);
+    console.log(response.repository.owner.id);
+    return response.repository.owner.id;
+  }
+  catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// let repoOwnerId = findOwnerId(repoOwner, repoName);
+
+////////////////////////////
+// CREATEPROJECT
+////////////////////////////
+
+let title = "v2";
+
+// id of owner to create project under
+let repoOwnerId = "U_kgDOBf4UGA";
+
+// id of repo to associate project with
+repoId = "R_kgDOLENATA";
+
+const createProject = async function createProjectAndLinkRepo(repoOwnerId, title, repoId) {
+  const queryString = 
+    `mutation CreateProjectV2 {
+      createProjectV2(input: {
+        ownerId: "${repoOwnerId}"
+        title: "${title}"
+        repositoryId: "${repoId}"
+      }) {
+        projectV2 {
+          id
+        }
+      }
+    }
+    `;
+  try{
+    const response = await query(queryString);
+    console.log("Response from creating project:", response);
     return response;
   }
   catch (error) {
@@ -205,42 +247,4 @@ const findOwnerId = async function findRepoOwnerId(repoOwner, repoName) {
   }
 }
 
-findOwnerId(repoOwner, repoName);
-
-
-
-////////////////////////////
-// CREATEPROJECT
-////////////////////////////
-
-// const createProject = async function createProjectAndLinkRepo(repoOwner, repoName) {
-//   const queryString = 
-//     `query FindRepo {
-//       repository(owner: "${repoOwner}", name: "${repoName}") {
-//         id
-//         pullRequests(first: 1) {
-//           nodes {
-//             number
-//             body
-//           }
-//         }
-//         issues(first: 1) {
-//           nodes {
-//             number
-//             author {
-//               login
-//             }
-//           }
-//         }
-//       }
-//     }
-//     `;
-//   try{
-//     const response = await query(queryString);
-//     console.log("Response from finding Repo:", response);
-//     return response;
-//   }
-//   catch (error) {
-//     console.error('Error:', error);
-//   }
-// }
+createProject(repoOwnerId, title, repoId);
